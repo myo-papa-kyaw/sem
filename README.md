@@ -1,3 +1,9 @@
+
+# SEM Project
+
+This is a test update to check GitHub Actions.
+
+
 ![workflow](https://github.com/myo-papa-kyaw/sem/actions/workflows/main.yml/badge.svg)
 
 

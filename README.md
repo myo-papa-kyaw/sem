@@ -15,3 +15,7 @@ This is a test update to check GitHub Actions.
 
 # DevOps
 ![CI Status](https://img.shields.io/github/actions/workflow/status/myo-papa-kyaw/sem/main.yml?branch=main&style=flat-square)
+
+
+# DevOps
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/myo-papa-kyaw/sem/<action name taken from main.yml>/<branch>?style=flat-square)

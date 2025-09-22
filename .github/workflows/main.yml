@@ -41,7 +41,7 @@ jobs:
         run: docker build -t se-methodss .
 
       - name: Run container
-        run: docker run --network se-methodss --name devopscontainer se-methodss
+        run: docker run --network se-methodss --name devopscontainer se-methodss 
 
       - name: View logs
         run: docker logs devopscontainer

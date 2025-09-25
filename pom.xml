@@ -35,6 +35,15 @@
             <artifactId>logback-classic</artifactId>
             <version>1.4.14</version>
         </dependency>
+
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.18</version>
+            </dependency>
+
+
     </dependencies>
 
     <build>
@@ -46,7 +55,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.napier.sem.App</mainClass>
+                            <mainClass>com.napier.sem.MySQL_Test</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -65,4 +74,7 @@
             </plugin>
         </plugins>
     </build>
+
+
+
 </project>

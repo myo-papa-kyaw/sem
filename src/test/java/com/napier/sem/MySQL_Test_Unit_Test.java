@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class MySQL_Test_Unit_Test {
 
     MySQL_Test mytest;

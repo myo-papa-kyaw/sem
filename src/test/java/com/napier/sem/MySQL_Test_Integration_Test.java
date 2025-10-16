@@ -1,18 +1,16 @@
 package com.napier.sem;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MySQL_Test_Integration_Test {
-
+public class MySQL_Test_Integration_Test {
     MySQL_Test mytest;
 
     @BeforeEach
     void setUp() {
         mytest = new MySQL_Test();
-        mytest.connect("localhost:3306", 10000);
+        mytest.connect("localhost:33060", 10000);
     }
 
     @Test

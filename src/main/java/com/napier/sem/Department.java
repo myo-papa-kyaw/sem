@@ -1,4 +1,4 @@
-package com.globalworldpopulation;
+package com.napier.sem;
 
 public class Department {
     private String dept_no, dept_name;

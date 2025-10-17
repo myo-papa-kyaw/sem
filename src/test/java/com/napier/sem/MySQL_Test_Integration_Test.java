@@ -24,13 +24,13 @@ public class MySQL_Test_Integration_Test {
     @Test
     void testAddEmployee() {
         Employee emp = new Employee();
-        emp.emp_no = 500000;
-        emp.first_name = "PaPa";
+        emp.emp_no = 500001;
+        emp.first_name = "Myo Pa Pa";
         emp.last_name = "Kyaw";
         mytest.addEmployee(emp);
-        emp = mytest.getEmployee(500000);
-        assertEquals(emp.emp_no, 500000);
-        assertEquals(emp.first_name, "PaPa");
+        emp = mytest.getEmployee(500001);
+        assertEquals(emp.emp_no, 500001);
+        assertEquals(emp.first_name, "Myo Pa Pa");
         assertEquals(emp.last_name, "Kyaw");
     }
 }

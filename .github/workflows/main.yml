@@ -1,10 +1,9 @@
-name: Global World Population CI/CD
+name: A workflow for my Global World Population App
 
 on:
   push:
     branches:
       - master
-      - develop
 
 permissions:
   contents: write
@@ -14,7 +13,7 @@ jobs:
     name: Unit Tests
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -25,23 +24,22 @@ jobs:
           java-version: '23'
           distribution: 'adopt'
 
-      - name: Run Unit Tests
+      - name: Unit Tests
         run: mvn -Dtest=com.napier.sem.MySQL_Test_Unit_Test test
 
-      - name: Upload coverage to Codecov
+      - name: CodeCov
         uses: codecov/codecov-action@v5
         with:
-          # Uncomment below for private repos
-          # token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./target/site/jacoco/jacoco.xml
-          flags: unittests
+          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          directory: ./target/site/jacoco
+          flags: Unit Tests
           verbose: true
 
   IntegrationTests:
     name: Integration Tests
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -52,34 +50,27 @@ jobs:
           java-version: '23'
           distribution: 'adopt'
 
-      - name: Start MySQL container
-        run: docker compose up -d db
-
-      - name: Wait for MySQL to be ready
+      - name: Integration Tests
         run: |
-          echo "Waiting for database to initialize..."
-          sleep 20
+          docker compose up -d db
+          mvn -Dtest=com.napier.sem.MySQL_Test_Integration_Test test
 
-      - name: Run Integration Tests
-        run: mvn -Dtest=com.napier.sem.MySQL_Test_Integration_Test test
-
-      - name: Shutdown Docker
+      - name: Shutdown
         run: docker compose down
 
-      - name: Upload coverage to Codecov
+      - name: CodeCov
         uses: codecov/codecov-action@v5
         with:
-          # Uncomment below for private repos
-          # token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./target/site/jacoco/jacoco.xml
-          flags: integrationtests
+          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          directory: ./target/site/jacoco
+          flags: Integration Tests
           verbose: true
 
-  BuildAndDeploy:
-    name: Build and Run in Docker
+  build:
+    name: Build Run in Docker and Deploy Release
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -90,13 +81,16 @@ jobs:
           java-version: '23'
           distribution: 'adopt'
 
-      - name: Build project (create devops.jar)
-        run: mvn clean package -DskipTests
-
-      - name: Verify devops.jar exists
-        run: ls -l ./target
-
-      - name: Build and Run Docker Compose
+      - name: Package and Run docker compose
         run: |
-          docker compose build
+          mvn package -DskipTests
           docker compose up --abort-on-container-exit
+
+      - name: Create Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "latest"
+          files: |
+            ./target/*.jar

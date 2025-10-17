@@ -23,7 +23,7 @@ public class MySQL_Test {
             System.exit(-1);
         }
 
-        int retries = 30;
+        int retries = 15;
         for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
             try {
